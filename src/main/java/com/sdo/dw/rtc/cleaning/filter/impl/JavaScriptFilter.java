@@ -7,9 +7,9 @@ import com.sdo.dw.rtc.cleaning.filter.ScriptFilter;
  * @author xiejing.kane
  *
  */
-@FilterType("groovy")
-public class GroovyFilter extends ScriptFilter {
-	public GroovyFilter() {
-		super("groovy");
+@FilterType("js")
+public class JavaScriptFilter extends ScriptFilter {
+	public JavaScriptFilter() {
+		super("js");
 	}
 }

@@ -26,7 +26,9 @@ import com.sdo.dw.rtc.cleaning.filter.impl.GroovyFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.IPToLongFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.JSONFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.JavaDynamicFilter;
+import com.sdo.dw.rtc.cleaning.filter.impl.JavaScriptFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.KeepFilter;
+import com.sdo.dw.rtc.cleaning.filter.impl.PythonFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.RemoveFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.RenameFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.ReplaceAllFilter;
@@ -56,7 +58,9 @@ public class Test {
 		// testBoolFilter();
 		// testUnderlineFilter();
 		// testGrokFilter();
-		testGroovyFilter();
+		// testGroovyFilter();
+		testPythonFilter();
+		// testJavaScriptFilter();
 	}
 
 	public static void testMain() throws Exception {
@@ -120,10 +124,31 @@ public class Test {
 	}
 
 	public static void testGroovyFilter() throws ScriptException {
-		JSONObject config = JSON.parseObject("{\"field\":\"new_calc\", \"expr\":\"123\"}");
+		JSONObject config = JSON
+				.parseObject("{\"field\":\"new_calc\", \"expr\":\"source.val = source.val*2; source\"}");
 		GroovyFilter filter = new GroovyFilter();
 		filter.init(config);
 		JSONObject data = new JSONObject();
+		data.put("val", 1.1);
+		System.out.println(filter.filter(data));
+	}
+
+	public static void testJavaScriptFilter() throws ScriptException {
+		JSONObject config = JSON
+				.parseObject("{\"field\":\"new_calc\", \"expr\":\"source.val = source.val*2; source\"}");
+		JavaScriptFilter filter = new JavaScriptFilter();
+		filter.init(config);
+		JSONObject data = new JSONObject();
+		data.put("val", 1.2);
+		System.out.println(filter.filter(data));
+	}
+
+	public static void testPythonFilter() throws ScriptException {
+		JSONObject config = JSON.parseObject("{\"field\":\"new_calc\", \"expr\":\"source['val']='5'\r\nsource\"}");
+		PythonFilter filter = new PythonFilter();
+		filter.init(config);
+		JSONObject data = new JSONObject();
+		data.put("val", 1.2);
 		System.out.println(filter.filter(data));
 	}
 

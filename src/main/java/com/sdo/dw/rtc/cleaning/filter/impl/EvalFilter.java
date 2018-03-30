@@ -36,20 +36,10 @@ public class EvalFilter implements Filter {
 
 	@Override
 	public JSONObject filter(JSONObject source) throws ScriptException {
-		StringBuilder sb = new StringBuilder();
 		for (Entry<String, Object> entry : source.entrySet()) {
-			sb.append(entry.getKey()).append("=").append(parse(entry.getValue())).append(";");
+			engine.put(entry.getKey(), entry.getValue());
 		}
-		sb.append(expr);
-		source.put(field, engine.eval(sb.toString()));
+		source.put(field, engine.eval(expr));
 		return source;
-	}
-
-	private String parse(Object obj) {
-		try {
-			return Double.parseDouble(obj.toString()) + "";
-		} catch (NumberFormatException e) {
-			return "'" + obj + "'";
-		}
 	}
 }
