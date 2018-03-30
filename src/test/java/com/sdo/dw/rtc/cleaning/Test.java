@@ -32,6 +32,7 @@ import com.sdo.dw.rtc.cleaning.filter.impl.PythonFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.RemoveFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.RenameFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.ReplaceAllFilter;
+import com.sdo.dw.rtc.cleaning.filter.impl.RubyFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.SplitFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.TrimFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.UnderlineFilter;
@@ -59,8 +60,9 @@ public class Test {
 		// testUnderlineFilter();
 		// testGrokFilter();
 		// testGroovyFilter();
-		testPythonFilter();
+		// testPythonFilter();
 		// testJavaScriptFilter();
+		testRubyFilter();
 	}
 
 	public static void testMain() throws Exception {
@@ -140,6 +142,16 @@ public class Test {
 		filter.init(config);
 		JSONObject data = new JSONObject();
 		data.put("val", 1.2);
+		System.out.println(filter.filter(data));
+	}
+
+	public static void testRubyFilter() throws ScriptException {
+		JSONObject config = JSON
+				.parseObject("{\"field\":\"new_calc\", \"expr\":\"source.val = source.val*2; source\"}");
+		RubyFilter filter = new RubyFilter();
+		filter.init(config);
+		JSONObject data = new JSONObject();
+		data.put("val", 1.1);
 		System.out.println(filter.filter(data));
 	}
 
