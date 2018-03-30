@@ -15,6 +15,14 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -52,6 +60,11 @@
 			<groupId>org.python</groupId>
 			<artifactId>jython</artifactId>
 			<version>2.7-b1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jruby</groupId>
+			<artifactId>jruby-complete</artifactId>
+			<version>9.1.16.0</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
