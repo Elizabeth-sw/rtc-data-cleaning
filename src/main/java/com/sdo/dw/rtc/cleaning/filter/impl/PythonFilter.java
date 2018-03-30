@@ -8,7 +8,6 @@ import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
@@ -37,6 +36,7 @@ public class PythonFilter implements Filter {
 		interpreter.cleanup();
 		interpreter.set("source", source);
 		interpreter.set("config", config);
-		return JSON.parseObject(interpreter.eval(expr).asString());
+		interpreter.exec(expr);
+		return source;
 	}
 }

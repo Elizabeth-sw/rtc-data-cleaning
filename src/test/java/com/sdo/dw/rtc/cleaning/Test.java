@@ -144,7 +144,7 @@ public class Test {
 	}
 
 	public static void testPythonFilter() throws ScriptException {
-		JSONObject config = JSON.parseObject("{\"field\":\"new_calc\", \"expr\":\"source['val']='5'\r\nsource\"}");
+		JSONObject config = JSON.parseObject("{\"field\":\"new_calc\", \"expr\":\"source['val']=5\"}");
 		PythonFilter filter = new PythonFilter();
 		filter.init(config);
 		JSONObject data = new JSONObject();
