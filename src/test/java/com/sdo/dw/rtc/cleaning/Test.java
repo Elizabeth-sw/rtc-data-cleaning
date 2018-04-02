@@ -22,17 +22,14 @@ import com.sdo.dw.rtc.cleaning.filter.impl.BoolFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.DateFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.EvalFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.GrokFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.GroovyFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.IPToLongFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.JSONFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.JavaDynamicFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.JavaScriptFilter;
+import com.sdo.dw.rtc.cleaning.filter.impl.JavaFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.KeepFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.PythonFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.RemoveFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.RenameFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.ReplaceAllFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.RubyFilter;
+import com.sdo.dw.rtc.cleaning.filter.impl.ScriptFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.SplitFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.TrimFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.UnderlineFilter;
@@ -59,10 +56,7 @@ public class Test {
 		// testBoolFilter();
 		// testUnderlineFilter();
 		// testGrokFilter();
-		// testGroovyFilter();
-		// testPythonFilter();
-		// testJavaScriptFilter();
-		testRubyFilter();
+		testScriptFilter();
 	}
 
 	public static void testMain() throws Exception {
@@ -102,7 +96,7 @@ public class Test {
 	}
 
 	public static void testJavaDynamicFilter() throws Exception {
-		JavaDynamicFilter filter = new JavaDynamicFilter();
+		JavaFilter filter = new JavaFilter();
 		JSONObject config = new JSONObject();
 		config.put("code_file", Test.class.getClassLoader().getResource("test_code").getPath());
 		JSONArray array = new JSONArray();
@@ -125,42 +119,13 @@ public class Test {
 		System.out.println(filter.filter(data).getLong("new_calc"));
 	}
 
-	public static void testGroovyFilter() throws ScriptException {
-		JSONObject config = JSON
-				.parseObject("{\"field\":\"new_calc\", \"expr\":\"source.val = source.val*2; source\"}");
-		GroovyFilter filter = new GroovyFilter();
+	public static void testScriptFilter() throws ScriptException {
+		JSONObject config = JSON.parseObject(
+				"{\"field\":\"new_calc\", \"engine\":\"python\", \"script\":\"source\"}");
+		ScriptFilter filter = new ScriptFilter();
 		filter.init(config);
 		JSONObject data = new JSONObject();
 		data.put("val", 1.1);
-		System.out.println(filter.filter(data));
-	}
-
-	public static void testJavaScriptFilter() throws ScriptException {
-		JSONObject config = JSON
-				.parseObject("{\"field\":\"new_calc\", \"expr\":\"source.val = source.val*2; source\"}");
-		JavaScriptFilter filter = new JavaScriptFilter();
-		filter.init(config);
-		JSONObject data = new JSONObject();
-		data.put("val", 1.2);
-		System.out.println(filter.filter(data));
-	}
-
-	public static void testRubyFilter() throws ScriptException {
-		JSONObject config = JSON
-				.parseObject("{\"field\":\"new_calc\", \"expr\":\"source.val = source.val*2; source\"}");
-		RubyFilter filter = new RubyFilter();
-		filter.init(config);
-		JSONObject data = new JSONObject();
-		data.put("val", 1.1);
-		System.out.println(filter.filter(data));
-	}
-
-	public static void testPythonFilter() throws ScriptException {
-		JSONObject config = JSON.parseObject("{\"field\":\"new_calc\", \"expr\":\"source['val']=5\"}");
-		PythonFilter filter = new PythonFilter();
-		filter.init(config);
-		JSONObject data = new JSONObject();
-		data.put("val", 1.2);
 		System.out.println(filter.filter(data));
 	}
 

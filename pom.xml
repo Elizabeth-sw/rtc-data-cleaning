@@ -55,16 +55,13 @@
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 			<version>2.4.7</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.python</groupId>
 			<artifactId>jython</artifactId>
 			<version>2.7-b1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jruby</groupId>
-			<artifactId>jruby-complete</artifactId>
-			<version>9.1.16.0</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

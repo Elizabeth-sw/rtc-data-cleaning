@@ -45,8 +45,8 @@ import com.sdo.dw.rtc.cleaning.filter.FilterType;
  *
  */
 @FilterType("java")
-public class JavaDynamicFilter implements Filter {
-	private static Logger LOGGER = LoggerFactory.getLogger(JavaDynamicFilter.class);
+public class JavaFilter implements Filter {
+	private static Logger LOGGER = LoggerFactory.getLogger(JavaFilter.class);
 
 	private Object target;
 
@@ -190,7 +190,7 @@ public class JavaDynamicFilter implements Filter {
 	 * @throws IOException
 	 */
 	private String readTemplate() throws IOException {
-		InputStream inputStream = JavaDynamicFilter.class.getClassLoader().getResourceAsStream(TEMPLATE_FILE);
+		InputStream inputStream = JavaFilter.class.getClassLoader().getResourceAsStream(TEMPLATE_FILE);
 		return readInputStream(inputStream);
 	}
 
