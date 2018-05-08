@@ -6,18 +6,19 @@ import static com.sdo.dw.rtc.cleaning.Constants.FILTER_PARAMS;
 import static com.sdo.dw.rtc.cleaning.Constants.TYPE;
 
 import java.io.File;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
@@ -113,13 +114,22 @@ public class Cleaner {
 		// to do
 	}
 
-	public static Cleaner create(JSONObject json) throws Exception {
-		Cleaner formatter = new Cleaner(new Context(json));
-		return formatter;
+	public static Cleaner create(String yaml) throws Exception {
+		@SuppressWarnings("unchecked")
+		Map<String, Object> map = (Map<String, Object>) new Yaml().load(yaml);
+		JSONObject json = new JSONObject(map);
+		return create(json);
 	}
 
-	public static Cleaner create(Properties props) throws Exception {
-		Cleaner formatter = new Cleaner(new Context(props));
+	public static Cleaner create(InputStream is) throws Exception {
+		@SuppressWarnings("unchecked")
+		Map<String, Object> map = (Map<String, Object>) new Yaml().load(is);
+		JSONObject json = new JSONObject(map);
+		return create(json);
+	}
+
+	private static Cleaner create(JSONObject json) throws Exception {
+		Cleaner formatter = new Cleaner(new Context(json));
 		return formatter;
 	}
 

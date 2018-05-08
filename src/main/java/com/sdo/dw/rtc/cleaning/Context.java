@@ -1,17 +1,11 @@
 package com.sdo.dw.rtc.cleaning;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import com.sdo.dw.rtc.cleaning.exception.InvalidParameterException;
 
 /**
@@ -23,47 +17,23 @@ import com.sdo.dw.rtc.cleaning.exception.InvalidParameterException;
  */
 public class Context {
 
-	private Map<String, String> parameters;
+	private JSONObject parameters;
 
 	public Context() {
-		parameters = Collections.synchronizedMap(new HashMap<String, String>());
-	}
-
-	public Context(Map<String, String> paramters) {
-		this();
-		this.putAll(paramters);
+		parameters = new JSONObject();
 	}
 
 	public Context(JSONObject json) {
-		this();
-		for (Entry<?, ?> entry : json.entrySet()) {
-			this.put(entry.getKey().toString(), entry.getValue().toString());
-		}
-	}
-
-	public Context(Properties props) {
-		this();
-		for (Entry<?, ?> entry : props.entrySet()) {
-			this.put(entry.getKey().toString(), entry.getValue().toString());
-		}
+		this.parameters = JSON.parseObject(json.toJSONString());
 	}
 
 	/**
-	 * Gets a copy of the backing map structure.
+	 * Gets a copy of the backing json structure.
 	 * 
-	 * @return immutable copy of backing map structure
+	 * @return immutable copy of backing json structure
 	 */
-	public ImmutableMap<String, String> getParameters() {
-		synchronized (parameters) {
-			return ImmutableMap.copyOf(parameters);
-		}
-	}
-
-	/**
-	 * Removes all of the mappings from this map.
-	 */
-	public void clear() {
-		parameters.clear();
+	public JSONObject getParameters() {
+		return JSON.parseObject(parameters.toJSONString());
 	}
 
 	/**
@@ -85,19 +55,18 @@ public class Context {
 	 * @throws IllegalArguemntException
 	 *             if the given prefix does not end with a period character.
 	 */
-	public ImmutableMap<String, String> getSubProperties(String prefix) {
+	public JSONObject getSubProperties(String prefix) {
 		Preconditions.checkArgument(prefix.endsWith("."),
 				"The given prefix does not end with a period (" + prefix + ")");
-		Map<String, String> result = Maps.newHashMap();
-		synchronized (parameters) {
-			for (String key : parameters.keySet()) {
-				if (key.startsWith(prefix)) {
-					String name = key.substring(prefix.length());
-					result.put(name, parameters.get(key));
-				}
+		JSONObject result = new JSONObject();
+		JSONObject paraCopy = getParameters();
+		for (String key : paraCopy.keySet()) {
+			if (key.startsWith(prefix)) {
+				String name = key.substring(prefix.length());
+				result.put(name, paraCopy.get(key));
 			}
 		}
-		return ImmutableMap.copyOf(result);
+		return result;
 	}
 
 	/**
@@ -130,23 +99,6 @@ public class Context {
 	}
 
 	/**
-	 * Gets value mapped to key, returning defaultValue if unmapped.
-	 * 
-	 * @param key
-	 *            to be found
-	 * @param defaultValue
-	 *            returned if key is unmapped
-	 * @return value associated with key
-	 */
-	public Boolean getBoolean(String key, Boolean defaultValue) {
-		String value = get(key);
-		if (value != null) {
-			return Boolean.parseBoolean(value.trim());
-		}
-		return defaultValue;
-	}
-
-	/**
 	 * Gets value mapped to key, returning null if unmapped.
 	 * <p>
 	 * Note that this method returns an object as opposed to a primitive. The
@@ -161,24 +113,7 @@ public class Context {
 	 * @return value associated with key or null if unmapped
 	 */
 	public Boolean getBoolean(String key) {
-		return getBoolean(key, null);
-	}
-
-	/**
-	 * Gets value mapped to key, returning defaultValue if unmapped.
-	 * 
-	 * @param key
-	 *            to be found
-	 * @param defaultValue
-	 *            returned if key is unmapped
-	 * @return value associated with key
-	 */
-	public Integer getInteger(String key, Integer defaultValue) {
-		String value = get(key);
-		if (value != null) {
-			return Integer.parseInt(value.trim());
-		}
-		return defaultValue;
+		return parameters.getBoolean(key);
 	}
 
 	/**
@@ -196,24 +131,7 @@ public class Context {
 	 * @return value associated with key or null if unmapped
 	 */
 	public Integer getInteger(String key) {
-		return getInteger(key, null);
-	}
-
-	/**
-	 * Gets value mapped to key, returning defaultValue if unmapped.
-	 * 
-	 * @param key
-	 *            to be found
-	 * @param defaultValue
-	 *            returned if key is unmapped
-	 * @return value associated with key
-	 */
-	public Long getLong(String key, Long defaultValue) {
-		String value = get(key);
-		if (value != null) {
-			return Long.parseLong(value.trim());
-		}
-		return defaultValue;
+		return parameters.getInteger(key);
 	}
 
 	/**
@@ -231,7 +149,7 @@ public class Context {
 	 * @return value associated with key or null if unmapped
 	 */
 	public Long getLong(String key) {
-		return getLong(key, null);
+		return parameters.getLong(key);
 	}
 
 	/**
@@ -244,7 +162,10 @@ public class Context {
 	 * @return value associated with key
 	 */
 	public String getString(String key, String defaultValue) {
-		return get(key, defaultValue);
+		if (containsKey(key)) {
+			return parameters.getString(key);
+		}
+		return defaultValue;
 	}
 
 	/**
@@ -255,7 +176,7 @@ public class Context {
 	 * @return value associated with key or null if unmapped
 	 */
 	public String getString(String key) {
-		return get(key);
+		return parameters.getString(key);
 	}
 
 	/**
@@ -267,15 +188,7 @@ public class Context {
 	 * @throws InvalidParameterException
 	 */
 	public JSONArray getJSONArray(String key) throws InvalidParameterException {
-		String value = get(key);
-		if (value != null) {
-			try {
-				return JSON.parseArray(value);
-			} catch (Exception e) {
-				throw new InvalidParameterException("Invalid JSONArray format: " + value, e);
-			}
-		}
-		throw new InvalidParameterException("unmapped key: " + key);
+		return parameters.getJSONArray(key);
 	}
 
 	/**
@@ -287,12 +200,11 @@ public class Context {
 	 * @throws InvalidParameterException
 	 */
 	public JSONObject getJSONObject(String key) throws InvalidParameterException {
-		String value = get(key);
-		if (value != null) {
+		if (containsKey(key)) {
 			try {
-				return JSON.parseObject(value);
+				return parameters.getJSONObject(key);
 			} catch (Exception e) {
-				throw new InvalidParameterException("Invalid JSONObject format: " + value, e);
+				throw new InvalidParameterException("Invalid JSONObject format: " + parameters.get(key), e);
 			}
 		}
 		throw new InvalidParameterException("unmapped key: " + key);
@@ -317,15 +229,15 @@ public class Context {
 		throw new InvalidParameterException("unmapped key: " + key);
 	}
 
-	private String get(String key, String defaultValue) {
-		String result = parameters.get(key);
+	public Object get(String key, Object defaultValue) {
+		Object result = parameters.get(key);
 		if (result != null) {
 			return result;
 		}
 		return defaultValue;
 	}
 
-	private String get(String key) {
+	public Object get(String key) {
 		return get(key, null);
 	}
 

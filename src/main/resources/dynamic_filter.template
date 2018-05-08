@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 ${IMPORT}
 
 public class _Template_ {
-	private static Logger LOGGER = LoggerFactory.getLogger(JavaDynamicFilter.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(JavaFilter.class);
 	
 	public JSONObject _execute_(JSONObject source, JSONObject config) {
 		${CODE}
