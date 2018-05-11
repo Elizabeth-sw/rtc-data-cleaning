@@ -1,6 +1,6 @@
 在ETL中的"T"或者是实时流处理中我们经常需要针对每个用户需求开发一个类或者代码块来完成数据清洗的工作
 
-使用这个类库，你只需要写一个JSON配置，就能轻松完成需求，节省大量开发，测试，发布和维护成本
+使用这个类库，你只需要写一个YAML配置，就能轻松完成需求，节省大量开发，测试，发布和维护成本
 
 Cleaner的输入是一个String，最终输出是一个JSON。这里借鉴了Logstash里的filter的概念，但这里为两类，decoder和filter。decoder负责将一个String解析成JSON；filter负责将一个JSON转化成另一个(也可以是同一个)JSON，最终形成一个清洗链
 
@@ -16,22 +16,19 @@ Cleaner的输入是一个String，最终输出是一个JSON。这里借鉴了Log
 
 ```java
 String srcData = "2018-02-09 17:14:04	INFO";
-String config = "{" + 
-		"	\"decoder\":{" + 
-		"		\"type\":\"grok\"," + 
-		"		\"grok_patterns\":{" + 
-		"			\"TESTLOG\":\"%{DATA:eventTime}\\t%{GREEDYDATA:level}\"" + 
-		"		}," + 
-		"		\"grok_entry\":\"TESTLOG\"" + 
-		"	}," + 
-		"	" + 
-		"	\"filters\":[" + 
-		"		{\"type\":\"date\", \"params\":{\"field\":\"eventTime\",\"source\":\"yyyy-MM-dd HH:mm:ss\",\"target\":\"yyyyMMdd HHmmss\"}}," + 
-		"		{\"type\":\"underline\", \"params\":{\"fields\":[\"eventTime\"]}}" + 
-		"	]" + 
-		"}";
+String config = 
+		"decoder:\n" + 
+		"  grok_patterns: {TESTLOG: \"%{DATA:eventTime}\\t%{GREEDYDATA:level}\"}\n" + 
+		"  grok_entry: TESTLOG\n" + 
+		"  type: grok\n" + 
+		"filters:\n" + 
+		"- type: date\n" + 
+		"  params: {field: eventTime, source: 'yyyy-MM-dd HH:mm:ss', target: yyyyMMdd HHmmss}\n" + 
+		"- type: underline\n" + 
+		"  params:\n" + 
+		"    fields: [eventTime]\n";
 
-Cleaner cleaner = Cleaner.create(JSON.parseObject(config));
+Cleaner cleaner = Cleaner.create(config);
 Result result = cleaner.process(srcData);
 System.out.println(JSON.toJSONString(result.getPayload(), true));
 ```
@@ -62,9 +59,8 @@ srcData是传入需要清洗的数据，config是清洗的配置信息，建议�
 ```
 * 范例
 ```
-{
-	"decoder":"json"
-}
+decoder:
+  type: json
 ```
 
 ### grok
@@ -80,17 +76,14 @@ grok_entry：正则入口
 ```
 * 范例
 ```
-{
-	"decoder":"grok",
-	"record_decode_error":true,
-	"grok_patterns_file":"src\\main\\resources\\default_patterns",
-	"grok_patterns":{
-		"YEAR":"(?>\\d\\d){1,2}",
-		"MONTHNUM":"(?:0?[1-9]|1[0-2])",
-		"DATE_CN":"%{YEAR:year}[/-]%{MONTHNUM:monthnum}"
-	},
-	"grok_entry":"DATE_CN"
-}
+decoder:
+  type: grok
+  grok_patterns:
+    YEAR: (?>\d\d){1,2}
+    MONTHNUM: (?:0?[1-9]|1[0-2])
+    DATE_CN: '%{YEAR:year}[/-]%{MONTHNUM:monthnum}'
+  grok_patterns_file: src\main\resources\default_patterns
+  grok_entry: DATE_CN
 ```
 		
 ## Filters
@@ -105,7 +98,11 @@ fields：重命名的keys
 ```
 * 范例
 ```
-{"filter":"rename", "params":{"fields":{"gameId":"game_id","monthnum":"MONTH"}}}
+type: rename
+params:
+  fields:
+    gameId: game_id
+    monthnum: MONTH
 ```
 
 ### remove
@@ -119,7 +116,11 @@ fields：需要删除的keys
 ```
 * 范例
 ```
-{"filter":"remove", "params":{"fields":["abc"]}}
+type: remove
+params:
+  fields:
+  - abc
+  - def
 ```
 
 ### keep
@@ -133,7 +134,12 @@ fields：需要保留的keys
 ```
 * 范例
 ```
-{"filter":"keep", "params":{"fields":["messageType","settleTime","ptId"]}}
+type: keep
+params:
+  fields:
+  - messageType
+  - settleTime
+  - ptId
 ```		
 
 ### underline
@@ -147,7 +153,10 @@ fields：需要格式化的keys
 ```
 * 范例
 ```
-{"filter":"underline", "params":{"fields":["abc"]}}
+type: underline
+params:
+  fields:
+  - messageType
 ```
 
 ### iptolong
@@ -162,7 +171,10 @@ newField: 格式化之后写入的新字段的key
 ```
 * 范例
 ```
-{"filter":"remove", "params":{"field":"ip", "newField":"ip_long"}}
+type: iptolong
+params:
+  field: ip
+  new_field: ip_long
 ```
 
 ### add
@@ -177,7 +189,12 @@ preserve_existing：如果与原有的key冲突，是否保留原有数据
 ```
 * 范例
 ```
-{"filter":"add", "params":{"fields":{"newf1":"v1","newf2":"v2"}, "preserve_existing":true}}
+type: add
+params:
+  preserve_existing: true
+  fields:
+    newf2: v2
+    newf1: v1
 ```
 
 ### date
@@ -193,7 +210,11 @@ target：目标格式
 ```
 * 范例
 ```
-{"filter":"date", "params":{"field":"event_time","source":"yyyyMMdd","target":"yyyy-MM-dd"}}
+type: date
+params:
+  field: event_time
+  source: yyyyMMdd
+  target: yyyy-MM-dd
 ```		
 
 ### trim
@@ -207,7 +228,11 @@ target：目标格式
 ```
 * 范例
 ```
-{"filter":"trim", "params":{"fields":["abc"]}}
+type: trim
+params:
+  fields:
+  - abc
+  - def
 ```
 
 ### replaceall
@@ -223,7 +248,11 @@ repl：用于替换的字符串
 ```
 * 范例
 ```
-{"filter":"replaceall", "params":{"field":"event_time","regex":"abc","repl":"def"}}
+type: replaceall
+params:
+  regex: abc
+  field: user_name
+  repl: def
 ```
 
 ### bool
@@ -237,7 +266,9 @@ conditions：条件表达式，语法同sql的where字句，只支持比较运�
 ```
 * 范例
 ```
-{"filter":"bool", "params":{"conditions":" (a!='qq' or b!=123.1) and c !=1"}}
+type: bool
+params:
+  conditions: ' (a!=''qq'' or b!=123.1) and c !=1'
 ```
 
 ### json
@@ -254,7 +285,12 @@ append_prefix：是否给解析出来的key添加前缀
 ```
 * 范例
 ```
-{"filter":"json", "params":{"field":"abc", "discard_existing":false, "preserve_existing":true, "append_prefix":false}}
+type: json
+params: 
+	append_prefix: false
+	discard_existing: false
+	field: abc
+	preserve_existing: true
 ```
 
 ### split
@@ -273,7 +309,14 @@ assigner:赋值符
 ```
 * 范例
 ```
-{"filter":"smiley", "params":{"field":"abc", "discard_existing":false, "preserve_existing":true, "append_prefix":false, "delimiter":",", "assigner":":"}}
+type: split
+params:
+  append_prefix: false
+  discard_existing: false
+  field: abc
+  delimiter: ','
+  preserve_existing: true
+  assigner: ':'
 ```
 
 ### grok
@@ -292,7 +335,15 @@ entry：正则解析入口
 ```
 * 范例
 ```
-{"filter":"grok", "params":{"field":"abc", "discard_existing":false, "preserve_existing":true, "append_prefix":false, "entry":"SPLIT_DATA", "patterns":{"SPLIT_DATA":"%{DATA:f1}|%{GREEDYDATA:f2}"}}}
+type: grok
+params:
+  append_prefix: false
+  discard_existing: false
+  entry: SPLIT_DATA
+  field: abc
+  preserve_existing: true
+  patterns:
+    SPLIT_DATA: '%{DATA:f1}|%{GREEDYDATA:f2}'
 ```
 
 ### eval
@@ -307,7 +358,10 @@ expr：计算表达式
 ```
 * 范例
 ```
-{"filter":"eval", "params":{"field":"new_calc", "expr":"(a/2+ b*5)"}}
+type: eval
+params:
+  field: new_calc
+  expr: (price/2 + count*5)
 ```
 
 ### java
@@ -323,7 +377,11 @@ import：代码需要引入的类，如果pom里并没有指定相应的dependen
 ```
 * 范例
 ```
-{"filter":"java", "params":{"code_file":"./code.txt","import":["com.google.common.collect.Lists"]}}
+type: java
+params:
+  code_file: /tmp/code
+  import:
+  - com.google.common.collect.Lists
 ```
 
 # 自定义插件
@@ -349,11 +407,10 @@ public class MyDecoder implements Decoder {
 ```
 * 然后就可以在配置中通过id调用该decoder
 ```
-{
-	"decoder":"my",
-	"my_param1":"abc",
-	"my_param2":123
-}
+decoder:
+  type: json
+  my_param1: abc
+  my_param2: 123
 ```
 其中`my_param1`和`my_param2`可以通过`decoderContext`获取
 
