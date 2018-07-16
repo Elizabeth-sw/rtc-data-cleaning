@@ -1,7 +1,5 @@
 package com.sdo.dw.rtc.cleaning;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.Map;
@@ -25,6 +23,7 @@ import com.sdo.dw.rtc.cleaning.filter.impl.IPToLongFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.JSONFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.JavaFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.KeepFilter;
+import com.sdo.dw.rtc.cleaning.filter.impl.MathFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.RemoveFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.RenameFilter;
 import com.sdo.dw.rtc.cleaning.filter.impl.ReplaceAllFilter;
@@ -37,7 +36,7 @@ import net.sf.jsqlparser.JSQLParserException;
 
 public class Test {
 	public static void main(String[] args) throws Exception {
-		testMain();
+		// testMain();
 		// testRenameFilter();
 		// testAnnotatedFilters();
 		// testJavaDynamicFilter();
@@ -56,18 +55,14 @@ public class Test {
 		// testUnderlineFilter();
 		// testGrokFilter();
 		// testScriptFilter();
+		testMathFilter();
 	}
 
 	public static void testMain() throws Exception {
-		String testLog = "2018-02-09 17:14:04	{\"messageType\":102,\"orderId\":\"99000000025708180209171404202910\",\"contextId\":\"99000000025708180209171404202910\",\"appCode\":1,\"settleTime\":\"2018-02-09 17:14:04\",\"endpointIp\":\"183.69.203.157\",\"ptId\":\"na00680708268.pt\",\"sndaId\":\"3485642628\",\"appId\":991002085,\"areaId\":1,\"payTypeId\":57,\"amount\":900,\"balanceBefore\":199040,\"itemInfo\":\"0\",\"messageId\":\"BS3412151816764477600001\",\"messageSourceIp\":\"10.129.34.12\",\"messageTimestamp\":\"2018-02-09 17:14:04.776\"}";
-		System.out.println(testLog);
-		Cleaner cleaner = Cleaner.create(getConfig("test_java.yml"));
-		Result result = cleaner.process(testLog);
+		String srcData = "2018-02-09 17:14:04	INFO";
+		Cleaner cleaner = Cleaner.create(Test.class.getClassLoader().getResourceAsStream("test.yml"));
+		Result result = cleaner.process(srcData);
 		System.out.println(JSON.toJSONString(result.getPayload(), true));
-	}
-
-	private static InputStream getConfig(String configFile) throws IOException {
-		return Test.class.getClassLoader().getResourceAsStream(configFile);
 	}
 
 	public static void testAnnotatedFilters() throws Exception {
@@ -221,7 +216,7 @@ public class Test {
 	}
 
 	public static void testBoolFilter() throws JSQLParserException {
-		JSONObject config = JSON.parseObject("{\"conditions\":\" (a!='qq' or b!=123.1) or c is null \"}");
+		JSONObject config = JSON.parseObject("{\"conditions\":\" (a!='qq2' or b!=123.1) or c is null \"}");
 		BoolFilter filter = new BoolFilter();
 		filter.init(config);
 		JSONObject data = new JSONObject();
@@ -250,6 +245,19 @@ public class Test {
 		JSONObject data = new JSONObject();
 		data.put("event_time", "20180131");
 		data.put("abc", "12|er");
+		System.out.println(filter.filter(data));
+	}
+
+	public static void testMathFilter() throws Exception {
+		JSONObject config = new JSONObject();
+		config.put("new_field", "x");
+		config.put("method", "max");
+		config.put("args", JSON.parseArray("[ \"a\", \"b\"]"));
+		MathFilter filter = new MathFilter();
+		filter.init(config);
+		JSONObject data = new JSONObject();
+		data.put("a", 1);
+		data.put("b", -2);
 		System.out.println(filter.filter(data));
 	}
 }

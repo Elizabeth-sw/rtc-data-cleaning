@@ -7,7 +7,7 @@ Cleaner的输入是一个String，最终输出是一个JSON。这里借鉴了Log
 * [Getting Started](./README.md#user-content-getting-started)
 * [Sample Config](./README.md#user-content-sample-config)
 	* [Decoder](./README.md#user-content-decoder): [json](./README.md#user-content-json) [grok](./README.md#user-content-grok)
-	* [Filters](./README.md#user-content-filters): [rename](./README.md#user-content-rename) [remove](./README.md#user-content-remove) [keep](./README.md#user-content-keep) [underline](./README.md#user-content-underline) [iptolong](./README.md#user-content-iptolong) [add](./README.md#user-content-add) [date](./README.md#user-content-date) [trim](./README.md#user-content-trim) [replaceall](./README.md#user-content-replaceall) [bool](./README.md#user-content-bool) [json](./README.md#user-content-json) [split](./README.md#user-content-split) [grok](./README.md#user-content-grok) [eval](./README.md#user-content-eval) [java](./README.md#user-content-java)
+	* [Filters](./README.md#user-content-filters): [rename](./README.md#user-content-rename) [remove](./README.md#user-content-remove) [keep](./README.md#user-content-keep) [underline](./README.md#user-content-underline) [iptolong](./README.md#user-content-iptolong) [add](./README.md#user-content-add) [date](./README.md#user-content-date) [trim](./README.md#user-content-trim) [replaceall](./README.md#user-content-replaceall) [bool](./README.md#user-content-bool) [json](./README.md#user-content-json) [split](./README.md#user-content-split) [grok](./README.md#user-content-grok) [eval](./README.md#user-content-eval) [java](./README.md#user-content-java) [math](./README.md#user-content-math)
 * [自定义插件](./README.md#user-content-自定义插件)
 
 
@@ -384,6 +384,28 @@ params:
   code_file: /tmp/code
   import:
   - com.google.common.collect.Lists
+```
+
+### math
+* 描述
+```
+使用java.lang.Math函数
+```
+* 参数
+```
+method：函数名
+args: 参与计算的key
+new_field：计算结果写入的新字段
+```
+* 范例
+```
+type: math
+params:
+  method: max
+  args:
+  - field_a
+  - field_b
+  new_field: max_a_b
 ```
 
 # 自定义插件
