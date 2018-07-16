@@ -21,7 +21,7 @@ Result result = cleaner.process(srcData);
 System.out.println(JSON.toJSONString(result.getPayload(), true));
 ```
 
-* test.yml是清洗的配置文件，具体配置见下一章节
+* test.yml是清洗的配置文件，同时也支持JSON格式的配置，具体见下一章节
 
 ```
 decoder:
