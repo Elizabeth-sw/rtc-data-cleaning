@@ -128,9 +128,9 @@ public class Cleaner {
 		return create(json);
 	}
 
-	private static Cleaner create(JSONObject json) throws Exception {
-		Cleaner formatter = new Cleaner(new Context(json));
-		return formatter;
+	public static Cleaner create(JSONObject json) throws Exception {
+		Cleaner cleaner = new Cleaner(new Context(json));
+		return cleaner;
 	}
 
 	public static Set<String> listFilters() throws Exception {
