@@ -16,23 +16,25 @@ Cleaner的输入是一个String，最终输出是一个JSON。这里借鉴了Log
 
 ```java
 String srcData = "2018-02-09 17:14:04	INFO";
-String config = 
-		"decoder:\n" + 
-		"  grok_patterns: {TESTLOG: \"%{DATA:eventTime}\\t%{GREEDYDATA:level}\"}\n" + 
-		"  grok_entry: TESTLOG\n" + 
-		"  type: grok\n" + 
-		"filters:\n" + 
-		"- type: date\n" + 
-		"  params: {field: eventTime, source: 'yyyy-MM-dd HH:mm:ss', target: yyyyMMdd HHmmss}\n" + 
-		"- type: underline\n" + 
-		"  params:\n" + 
-		"    fields: [eventTime]\n";
-
-Cleaner cleaner = Cleaner.create(config);
+Cleaner cleaner = Cleaner.create(<YourClass>.class.getClassLoader().getResourceAsStream("<path>/test.yml"));
 Result result = cleaner.process(srcData);
 System.out.println(JSON.toJSONString(result.getPayload(), true));
 ```
-srcData是传入需要清洗的数据，config是清洗的配置信息，建议放到一个单独的配置文件中读取，具体配置见下一章节
+
+test.yml是清洗的配置文件，具体配置见下一章节
+
+```
+decoder:
+  grok_patterns: {TESTLOG: "%{DATA:eventTime}\t%{GREEDYDATA:level}"}
+  grok_entry: TESTLOG
+  type: grok
+filters:
+- type: date
+  params: {field: eventTime, source: 'yyyy-MM-dd HH:mm:ss', target: yyyyMMdd HHmmss}
+- type: underline
+  params:
+    fields: [eventTime]
+```
 
 这里做了三步处理:
 1. 从日志中解析出eventTime字段和level字段
@@ -389,6 +391,8 @@ params:
 
 * 在`com.sdo.dw.rtc.cleaning.decoder.impl`包中新建`Decoder`接口的实现类`MyDecoder`，并且加上`@DecoderType("my")`注解，注解的值即为该decoder的id
 ```
+package test;
+
 @DecoderType("my")
 public class MyDecoder implements Decoder {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MyDecoder.class);
@@ -408,10 +412,18 @@ public class MyDecoder implements Decoder {
 * 然后就可以在配置中通过id调用该decoder
 ```
 decoder:
-  type: json
+  type: my
   my_param1: abc
   my_param2: 123
 ```
 其中`my_param1`和`my_param2`可以通过`decoderContext`获取
+
+或者也可以直接通过类名直接调用decoder
+```
+decoder:
+  type: test.MyDecoder
+  my_param1: abc
+  my_param2: 123
+```
 
 filter的自定义同理
