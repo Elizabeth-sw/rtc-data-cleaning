@@ -1,6 +1,6 @@
 在ETL中的"T"或者是实时流处理中我们经常需要针对每个用户需求开发一个类或者代码块来完成数据清洗的工作
 
-使用这个类库，你只需要写一个YAML配置，就能轻松完成需求，节省大量开发，测试，发布和维护成本
+使用这个类库，你只需要写一个YAML配置，就能轻松完成需求，节省大量开发，测试，发布和维护成本。集成到Flink，Spark Streaming，Kafka Streams，Storm等流式计算引擎中，当需求变更时，只需要重新传入修改后的配置然后重启应用就行，避免重新部署，大大简化了开发流程
 
 Cleaner的输入是一个String，最终输出是一个JSON。这里借鉴了Logstash里的filter的概念，但这里为两类，decoder和filter。decoder负责将一个String解析成JSON；filter负责将一个JSON转化成另一个(也可以是同一个)JSON，最终形成一个清洗链
 
@@ -25,15 +25,20 @@ System.out.println(JSON.toJSONString(result.getPayload(), true));
 
 ```
 decoder:
-  grok_patterns: {TESTLOG: "%{DATA:eventTime}\t%{GREEDYDATA:level}"}
+  grok_patterns:
+    TESTLOG: "%{DATA:eventTime}\t%{GREEDYDATA:level}"
   grok_entry: TESTLOG
   type: grok
 filters:
 - type: date
-  params: {field: eventTime, source: 'yyyy-MM-dd HH:mm:ss', target: yyyyMMdd HHmmss}
+  params:
+    field: eventTime
+    source: yyyy-MM-dd HH:mm:ss
+    target: yyyyMMdd HHmmss
 - type: underline
   params:
-    fields: [eventTime]
+    fields:
+    - eventTime
 ```
 
 * 这里做了三步处理:
