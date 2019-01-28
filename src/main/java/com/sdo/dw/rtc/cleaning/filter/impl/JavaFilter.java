@@ -192,20 +192,13 @@ public class JavaFilter implements Filter {
 	}
 
 	private String readInputStream(InputStream inputStream) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-		StringBuilder stringBuilder = new StringBuilder();
-		String line = null;
-		try {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));) {
+			StringBuilder stringBuilder = new StringBuilder();
+			String line = null;
 			while ((line = br.readLine()) != null) {
 				stringBuilder.append(line);
 			}
 			return stringBuilder.toString();
-		} finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				LOGGER.error("close template reader error", e);
-			}
 		}
 	}
 

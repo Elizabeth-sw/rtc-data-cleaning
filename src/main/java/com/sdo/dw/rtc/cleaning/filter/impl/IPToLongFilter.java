@@ -1,6 +1,7 @@
 package com.sdo.dw.rtc.cleaning.filter.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
 import com.sdo.dw.rtc.cleaning.util.JSONUtils;
@@ -22,11 +23,9 @@ public class IPToLongFilter implements Filter {
 
 	@Override
 	public JSONObject filter(JSONObject source) {
-		if (source.containsKey(field)) {
-			String ip = source.getString(field);
-			if (!ip.isEmpty()) {
-				source.put(newField, ipToLong(ip));
-			}
+		String ip = source.getString(field);
+		if (!Strings.isNullOrEmpty(ip)) {
+			source.put(newField, ipToLong(ip));
 		}
 		return source;
 	}
