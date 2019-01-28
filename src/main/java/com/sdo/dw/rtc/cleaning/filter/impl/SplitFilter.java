@@ -5,6 +5,7 @@ import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
 import com.sdo.dw.rtc.cleaning.util.CommonUtils;
 import com.sdo.dw.rtc.cleaning.util.ExtractCallable;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -29,12 +30,14 @@ public class SplitFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		field = config.getString("field");
+		field = JSONUtils.getRequiredString(config, "field");
+		delimiter = JSONUtils.getRequiredString(config, "delimiter");
+		assigner = JSONUtils.getRequiredString(config, "assigner");
+		
 		discardExisting = (boolean) config.getOrDefault("discard_existing", DEFAULT_DISCARD_EXISTING);
 		preserveExisting = (boolean) config.getOrDefault("preserve_existing", DEFAULT_PRESERVE_EXISTING);
 		appendPrefix = (boolean) config.getOrDefault("append_prefix", DEFAULT_APPEND_PREFIX);
-		delimiter = config.getString("delimiter");
-		assigner = config.getString("assigner");
+		
 	}
 
 	@Override

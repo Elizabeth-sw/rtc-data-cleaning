@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -15,9 +16,9 @@ public class AddFilter implements Filter {
 	private JSONObject fields;
 	private boolean preserveExisting = true;
 
-	@Override	
+	@Override
 	public void init(JSONObject config) {
-		fields = config.getJSONObject("fields");
+		fields = JSONUtils.<JSONObject>getRequired(config, "fields");
 		preserveExisting = config.getBooleanValue("preserve_existing");
 	}
 

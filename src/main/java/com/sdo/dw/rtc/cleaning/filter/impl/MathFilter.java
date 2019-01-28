@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -20,8 +21,8 @@ public class MathFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		newField = config.getString("new_field");
-		method = config.getString("method");
+		newField = JSONUtils.getRequiredString(config, "new_field");
+		method = JSONUtils.getRequiredString(config, "method");
 		for (Object field : config.getJSONArray("args")) {
 			args.add(field.toString());
 		}

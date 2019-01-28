@@ -1,12 +1,12 @@
 package com.sdo.dw.rtc.cleaning.filter.impl;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -15,34 +15,23 @@ import com.sdo.dw.rtc.cleaning.filter.FilterType;
 @FilterType("date")
 public class DateFilter implements Filter {
 	private String field;
-	private ThreadLocal<SimpleDateFormat> sourceSdf;
-	private ThreadLocal<SimpleDateFormat> targetSdf;
+	private DateTimeFormatter sourceFormatter;
+	private DateTimeFormatter targetFormatter;
 
 	@Override
 	public void init(JSONObject config) {
 		field = config.getString("field");
-		String sourceFormat = config.getString("source");
-		String targetFormat = config.getString("target");
-		sourceSdf = new ThreadLocal<SimpleDateFormat>() {
-			@Override
-			protected SimpleDateFormat initialValue() {
-				return new SimpleDateFormat(sourceFormat);
-			}
-		};
-		targetSdf = new ThreadLocal<SimpleDateFormat>() {
-			@Override
-			protected SimpleDateFormat initialValue() {
-				return new SimpleDateFormat(targetFormat);
-			}
-		};
+		String sourceFormat = JSONUtils.getRequiredString(config, "source");
+		String targetFormat = JSONUtils.getRequiredString(config, "target");
+
+		sourceFormatter = DateTimeFormatter.ofPattern(sourceFormat);
+		targetFormatter = DateTimeFormatter.ofPattern(targetFormat);
 	}
 
 	@Override
 	public JSONObject filter(JSONObject source) throws ParseException {
 		if (source.containsKey(field)) {
-			Date sourceDate = sourceSdf.get().parse(source.getString(field));
-			String targetDate = targetSdf.get().format(sourceDate);
-			source.put(field, targetDate);
+			source.put(field, targetFormatter.format(sourceFormatter.parse(source.getString(field))));
 		}
 		return source;
 	}

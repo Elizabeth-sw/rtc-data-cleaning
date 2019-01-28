@@ -9,6 +9,7 @@ import javax.script.ScriptException;
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -22,8 +23,8 @@ public class EvalFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		field = config.getString("field");
-		expr = config.getString("expr");
+		field = JSONUtils.getRequiredString(config, "field");
+		expr = JSONUtils.getRequiredString(config, "expr");
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		engine = mgr.getEngineByName("JavaScript");
 	}

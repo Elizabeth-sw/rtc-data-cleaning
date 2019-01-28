@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -19,7 +19,7 @@ public class KeepFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		fields = Lists.newArrayList(config.getJSONArray("fields").toArray(new String[] {}));
+		fields = JSONUtils.getRequiredList(config, "fields");
 	}
 
 	@Override

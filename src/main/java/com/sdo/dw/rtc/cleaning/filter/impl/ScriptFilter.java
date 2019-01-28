@@ -8,6 +8,7 @@ import javax.script.ScriptException;
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -21,8 +22,8 @@ public class ScriptFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		script = config.getString("script");
-		engineName = config.getString("engine");
+		script = JSONUtils.getRequiredString(config, "script");
+		engineName = JSONUtils.getRequiredString(config, "engine");
 		engine = new ScriptEngineManager().getEngineByName(engineName);
 		engine.getBindings(ScriptContext.GLOBAL_SCOPE).put("config", config);
 	}

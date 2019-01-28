@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
 import com.sdo.dw.rtc.cleaning.util.CommonUtils;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * 将key由驼峰表达式替换成下划线表达式
@@ -24,7 +24,7 @@ public class UnderlineFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		fields = Lists.newArrayList(config.getJSONArray("fields").toArray(new String[] {}));
+		fields = JSONUtils.getRequiredList(config, "fields");
 	}
 
 	@Override

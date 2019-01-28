@@ -3,6 +3,7 @@ package com.sdo.dw.rtc.cleaning.filter.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -17,9 +18,9 @@ public class ReplaceAllFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		field = config.getString("field");
-		regex = config.getString("regex");
-		repl = config.getString("repl");
+		field = JSONUtils.getRequiredString(config, "field");
+		regex = JSONUtils.getRequiredString(config, "regex");
+		repl = JSONUtils.getRequiredString(config, "repl");
 	}
 
 	@Override

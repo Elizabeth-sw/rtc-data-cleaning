@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.DoubleValue;
@@ -38,7 +39,7 @@ public class BoolFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		conditions = config.getString("conditions");
+		conditions = JSONUtils.getRequiredString(config, "conditions");
 	}
 
 	@Override

@@ -3,9 +3,9 @@ package com.sdo.dw.rtc.cleaning.filter.impl;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Lists;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.sdo.dw.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
@@ -17,7 +17,7 @@ public class TrimFilter implements Filter {
 
 	@Override
 	public void init(JSONObject config) {
-		fields = Lists.newArrayList(config.getJSONArray("fields").toArray(new String[] {}));
+		fields = JSONUtils.getRequiredList(config, "fields");
 	}
 
 	@Override
