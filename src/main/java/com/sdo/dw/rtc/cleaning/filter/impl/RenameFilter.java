@@ -2,9 +2,6 @@ package com.sdo.dw.rtc.cleaning.filter.impl;
 
 import java.util.Map.Entry;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
@@ -15,13 +12,11 @@ import com.sdo.dw.rtc.cleaning.filter.FilterType;
  */
 @FilterType("rename")
 public class RenameFilter implements Filter {
-	private static Logger LOGGER = LoggerFactory.getLogger(RenameFilter.class);
 	private JSONObject fields;
 
 	@Override
 	public void init(JSONObject config) {
 		fields = config.getJSONObject("fields");
-		LOGGER.info("rename fields = " + fields);
 	}
 
 	@Override

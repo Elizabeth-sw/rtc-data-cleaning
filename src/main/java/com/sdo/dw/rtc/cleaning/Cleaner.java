@@ -64,6 +64,7 @@ public class Cleaner {
 			try {
 				filter = (Filter) Class.forName(className).newInstance();
 				filter.init(filterConfig);
+				LoggerFactory.getLogger(filter.getClass()).info(filterConfig.toJSONString());
 				filterList.add(filter);
 			} catch (Exception e) {
 				LOGGER.error("Failed to create filter: " + className, e);

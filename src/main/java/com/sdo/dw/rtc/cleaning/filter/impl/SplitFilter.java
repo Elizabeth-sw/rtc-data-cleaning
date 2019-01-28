@@ -1,10 +1,5 @@
 package com.sdo.dw.rtc.cleaning.filter.impl;
 
-import java.text.MessageFormat;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
@@ -17,7 +12,6 @@ import com.sdo.dw.rtc.cleaning.util.ExtractCallable;
  */
 @FilterType("split")
 public class SplitFilter implements Filter {
-	private static Logger LOGGER = LoggerFactory.getLogger(SplitFilter.class);
 	private static final boolean DEFAULT_DISCARD_EXISTING = false;
 	private static final boolean DEFAULT_PRESERVE_EXISTING = true;
 	private static final boolean DEFAULT_APPEND_PREFIX = false;
@@ -41,9 +35,6 @@ public class SplitFilter implements Filter {
 		appendPrefix = (boolean) config.getOrDefault("append_prefix", DEFAULT_APPEND_PREFIX);
 		delimiter = config.getString("delimiter");
 		assigner = config.getString("assigner");
-		LOGGER.info(
-				MessageFormat.format("field = {0}, discardExisting = {1}, preserveExisting = {2}, appendPrefix = {3}",
-						field, discardExisting, preserveExisting, appendPrefix));
 	}
 
 	@Override

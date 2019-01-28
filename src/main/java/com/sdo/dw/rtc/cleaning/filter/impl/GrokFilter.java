@@ -1,7 +1,5 @@
 package com.sdo.dw.rtc.cleaning.filter.impl;
 
-import java.text.MessageFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +39,6 @@ public class GrokFilter implements Filter {
 		discardExisting = (boolean) config.getOrDefault("discard_existing", DEFAULT_DISCARD_EXISTING);
 		preserveExisting = (boolean) config.getOrDefault("preserve_existing", DEFAULT_PRESERVE_EXISTING);
 		appendPrefix = (boolean) config.getOrDefault("append_prefix", DEFAULT_APPEND_PREFIX);
-		LOGGER.info(MessageFormat.format(
-				"field = {0}, discardExisting = {1}, preserveExisting = {2}, appendPrefix = {3}, patterns = {4}", field,
-				discardExisting, preserveExisting, appendPrefix, config.getJSONObject("patterns")));
 		initGrok(config);
 	}
 
@@ -51,7 +46,6 @@ public class GrokFilter implements Filter {
 		String name = config.getString("entry");
 		JSONObject patterns = config.getJSONObject("patterns");
 		grok = CommonUtils.initGrok(name, patterns, null);
-		LOGGER.info(MessageFormat.format("entry = {0}, patterns = {1}", name, patterns));
 	}
 
 	@Override

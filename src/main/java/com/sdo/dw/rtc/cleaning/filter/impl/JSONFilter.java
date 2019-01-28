@@ -1,10 +1,5 @@
 package com.sdo.dw.rtc.cleaning.filter.impl;
 
-import java.text.MessageFormat;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
@@ -18,7 +13,6 @@ import com.sdo.dw.rtc.cleaning.util.ExtractCallable;
  */
 @FilterType("json")
 public class JSONFilter implements Filter {
-	private static Logger LOGGER = LoggerFactory.getLogger(JSONFilter.class);
 	private static final boolean DEFAULT_DISCARD_EXISTING = false;
 	private static final boolean DEFAULT_PRESERVE_EXISTING = true;
 	private static final boolean DEFAULT_APPEND_PREFIX = false;
@@ -38,9 +32,6 @@ public class JSONFilter implements Filter {
 		discardExisting = (boolean) config.getOrDefault("discard_existing", DEFAULT_DISCARD_EXISTING);
 		preserveExisting = (boolean) config.getOrDefault("preserve_existing", DEFAULT_PRESERVE_EXISTING);
 		appendPrefix = (boolean) config.getOrDefault("append_prefix", DEFAULT_APPEND_PREFIX);
-		LOGGER.info(
-				MessageFormat.format("field = {0}, discardExisting = {1}, preserveExisting = {2}, appendPrefix = {3}",
-						field, discardExisting, preserveExisting, appendPrefix));
 	}
 
 	@Override

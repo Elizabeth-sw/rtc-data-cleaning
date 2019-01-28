@@ -1,8 +1,5 @@
 package com.sdo.dw.rtc.cleaning.filter.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
 import com.sdo.dw.rtc.cleaning.filter.FilterType;
@@ -13,7 +10,6 @@ import com.sdo.dw.rtc.cleaning.filter.FilterType;
  */
 @FilterType("iptolong")
 public class IPToLongFilter implements Filter {
-	private static Logger LOGGER = LoggerFactory.getLogger(IPToLongFilter.class);
 	private String field;
 	private String newField;
 
@@ -21,7 +17,6 @@ public class IPToLongFilter implements Filter {
 	public void init(JSONObject config) {
 		field = config.getString("field");
 		newField = config.getString("new_field");
-		LOGGER.info("IPToLongFilter field = " + field + ", newField = " + newField);
 	}
 
 	@Override

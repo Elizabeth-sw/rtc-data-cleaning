@@ -1,14 +1,10 @@
 package com.sdo.dw.rtc.cleaning.filter.impl;
 
-import java.text.MessageFormat;
 import java.util.Map.Entry;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
@@ -20,7 +16,6 @@ import com.sdo.dw.rtc.cleaning.filter.FilterType;
  */
 @FilterType("eval")
 public class EvalFilter implements Filter {
-	private static Logger LOGGER = LoggerFactory.getLogger(EvalFilter.class);
 	private ScriptEngine engine;
 	private String field;
 	private String expr;
@@ -31,7 +26,6 @@ public class EvalFilter implements Filter {
 		expr = config.getString("expr");
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		engine = mgr.getEngineByName("JavaScript");
-		LOGGER.info(MessageFormat.format("field = {0}, expr = {1}", field, expr));
 	}
 
 	@Override

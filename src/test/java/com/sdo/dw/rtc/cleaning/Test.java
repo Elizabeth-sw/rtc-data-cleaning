@@ -36,7 +36,7 @@ import net.sf.jsqlparser.JSQLParserException;
 
 public class Test {
 	public static void main(String[] args) throws Exception {
-		// testMain();
+		testMain();
 		// testRenameFilter();
 		// testAnnotatedFilters();
 		// testJavaDynamicFilter();
@@ -55,7 +55,7 @@ public class Test {
 		// testUnderlineFilter();
 		// testGrokFilter();
 		// testScriptFilter();
-		testMathFilter();
+		// testMathFilter();
 	}
 
 	public static void testMain() throws Exception {

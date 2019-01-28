@@ -18,7 +18,6 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,8 +60,6 @@ public class JavaFilter implements Filter {
 		JSONArray imports = config.getJSONArray(IMPORT);
 		String sourceCode = renderCode(code, imports);
 		initTemplate(sourceCode);
-		LOGGER.info(MessageFormat.format("original code = {0}, imports = {1}, rendered code = {2}", code, imports,
-				sourceCode));
 	}
 
 	@Override

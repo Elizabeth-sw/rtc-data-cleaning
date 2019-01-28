@@ -2,9 +2,6 @@ package com.sdo.dw.rtc.cleaning.filter.impl;
 
 import java.util.Stack;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sdo.dw.rtc.cleaning.filter.Filter;
@@ -37,13 +34,11 @@ import net.sf.jsqlparser.statement.select.Select;
  */
 @FilterType("bool")
 public class BoolFilter implements Filter {
-	private static Logger LOGGER = LoggerFactory.getLogger(BoolFilter.class);
 	private String conditions;
 
 	@Override
 	public void init(JSONObject config) {
 		conditions = config.getString("conditions");
-		LOGGER.info("conditions = " + conditions);
 	}
 
 	@Override
