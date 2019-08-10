@@ -1,18 +1,18 @@
-package com.sdo.dw.rtc.cleaning.decoder.impl;
+package com.xie.rtc.cleaning.decoder.impl;
 
-import static com.sdo.dw.rtc.cleaning.Constants.GROK_ENTRY;
-import static com.sdo.dw.rtc.cleaning.Constants.GROK_PATTERNS;
-import static com.sdo.dw.rtc.cleaning.Constants.GROK_PATTERNS_FILE;
+import static com.xie.rtc.cleaning.Constants.GROK_ENTRY;
+import static com.xie.rtc.cleaning.Constants.GROK_PATTERNS;
+import static com.xie.rtc.cleaning.Constants.GROK_PATTERNS_FILE;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sdo.dw.rtc.cleaning.Context;
-import com.sdo.dw.rtc.cleaning.decoder.Decoder;
-import com.sdo.dw.rtc.cleaning.decoder.DecoderType;
-import com.sdo.dw.rtc.cleaning.util.CommonUtils;
+import com.xie.rtc.cleaning.Context;
+import com.xie.rtc.cleaning.decoder.Decoder;
+import com.xie.rtc.cleaning.decoder.DecoderType;
+import com.xie.rtc.cleaning.util.CommonUtils;
 
 import io.thekraken.grok.api.Grok;
 import io.thekraken.grok.api.Match;

@@ -56,7 +56,7 @@ filters:
 ```
 
 # Sample Config
-具体用法可以参考[测试代码](./src/test/java/com/sdo/dw/rtc/cleaning/Test.java)
+具体用法可以参考[测试代码](./src/test/java/com/xie/rtc/cleaning/Test.java)
 
 ## Decoder
 ### json
@@ -416,7 +416,7 @@ params:
 # 自定义插件
 开发和使用自定义的decoder和filter也很简单，以decoder为例
 
-* 在`com.sdo.dw.rtc.cleaning.decoder.impl`包中新建`Decoder`接口的实现类`MyDecoder`，并且加上`@DecoderType("my")`注解，注解的值即为该decoder的id
+* 在`com.xie.rtc.cleaning.decoder.impl`包中新建`Decoder`接口的实现类`MyDecoder`，并且加上`@DecoderType("my")`注解，注解的值即为该decoder的id
 ```
 package test;
 

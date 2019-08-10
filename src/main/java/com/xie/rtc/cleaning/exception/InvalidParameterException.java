@@ -1,4 +1,4 @@
-package com.sdo.dw.rtc.cleaning.exception;
+package com.xie.rtc.cleaning.exception;
 
 /**
  * @author xiejing.kane

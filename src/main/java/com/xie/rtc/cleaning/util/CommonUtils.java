@@ -1,10 +1,10 @@
-package com.sdo.dw.rtc.cleaning.util;
+package com.xie.rtc.cleaning.util;
 
-import static com.sdo.dw.rtc.cleaning.Constants.GROK_PATTERNS;
-import static com.sdo.dw.rtc.cleaning.Constants.GROK_PATTERNS_FILE;
-import static com.sdo.dw.rtc.cleaning.Constants.RES_FAILURE;
-import static com.sdo.dw.rtc.cleaning.Constants.RES_SOURCE;
-import static com.sdo.dw.rtc.cleaning.Constants.RES_THROWABLE;
+import static com.xie.rtc.cleaning.Constants.GROK_PATTERNS;
+import static com.xie.rtc.cleaning.Constants.GROK_PATTERNS_FILE;
+import static com.xie.rtc.cleaning.Constants.RES_FAILURE;
+import static com.xie.rtc.cleaning.Constants.RES_SOURCE;
+import static com.xie.rtc.cleaning.Constants.RES_THROWABLE;
 
 import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
-import com.sdo.dw.rtc.cleaning.decoder.DecoderType;
-import com.sdo.dw.rtc.cleaning.exception.InvalidParameterException;
-import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.xie.rtc.cleaning.decoder.DecoderType;
+import com.xie.rtc.cleaning.exception.InvalidParameterException;
+import com.xie.rtc.cleaning.filter.FilterType;
 
 import io.thekraken.grok.api.Grok;
 

@@ -1,4 +1,4 @@
-package com.sdo.dw.rtc.cleaning;
+package com.xie.rtc.cleaning;
 
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -13,24 +13,26 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
-import com.sdo.dw.rtc.cleaning.filter.Filter;
-import com.sdo.dw.rtc.cleaning.filter.FilterType;
-import com.sdo.dw.rtc.cleaning.filter.impl.BoolFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.DateFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.EvalFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.GrokFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.IPToLongFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.JSONFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.JavaFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.KeepFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.MathFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.RemoveFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.RenameFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.ReplaceAllFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.ScriptFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.SplitFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.TrimFilter;
-import com.sdo.dw.rtc.cleaning.filter.impl.UnderlineFilter;
+import com.xie.rtc.cleaning.Cleaner;
+import com.xie.rtc.cleaning.Result;
+import com.xie.rtc.cleaning.filter.Filter;
+import com.xie.rtc.cleaning.filter.FilterType;
+import com.xie.rtc.cleaning.filter.impl.BoolFilter;
+import com.xie.rtc.cleaning.filter.impl.DateFilter;
+import com.xie.rtc.cleaning.filter.impl.EvalFilter;
+import com.xie.rtc.cleaning.filter.impl.GrokFilter;
+import com.xie.rtc.cleaning.filter.impl.IPToLongFilter;
+import com.xie.rtc.cleaning.filter.impl.JSONFilter;
+import com.xie.rtc.cleaning.filter.impl.JavaFilter;
+import com.xie.rtc.cleaning.filter.impl.KeepFilter;
+import com.xie.rtc.cleaning.filter.impl.MathFilter;
+import com.xie.rtc.cleaning.filter.impl.RemoveFilter;
+import com.xie.rtc.cleaning.filter.impl.RenameFilter;
+import com.xie.rtc.cleaning.filter.impl.ReplaceAllFilter;
+import com.xie.rtc.cleaning.filter.impl.ScriptFilter;
+import com.xie.rtc.cleaning.filter.impl.SplitFilter;
+import com.xie.rtc.cleaning.filter.impl.TrimFilter;
+import com.xie.rtc.cleaning.filter.impl.UnderlineFilter;
 
 import net.sf.jsqlparser.JSQLParserException;
 
@@ -157,7 +159,7 @@ public class Test {
 	public static void testAddFilter() throws Exception {
 		JSONObject config = JSON
 				.parseObject("{\"fields\":{\"newf1\":\"v1\",\"newf2\":\"v2\"}, \"preserve_existing\":false}");
-		Filter filter = (Filter) Class.forName("com.sdo.dw.rtc.cleaning.filter.impl.AddFilter").newInstance();
+		Filter filter = (Filter) Class.forName("com.xie.rtc.cleaning.filter.impl.AddFilter").newInstance();
 		filter.init(config);
 		JSONObject data = new JSONObject();
 		data.put("newf1", "20180131");

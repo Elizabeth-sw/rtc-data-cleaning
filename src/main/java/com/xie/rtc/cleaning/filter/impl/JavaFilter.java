@@ -1,11 +1,11 @@
-package com.sdo.dw.rtc.cleaning.filter.impl;
+package com.xie.rtc.cleaning.filter.impl;
 
-import static com.sdo.dw.rtc.cleaning.Constants.CODE;
-import static com.sdo.dw.rtc.cleaning.Constants.CODE_FILE;
-import static com.sdo.dw.rtc.cleaning.Constants.IMPORT;
-import static com.sdo.dw.rtc.cleaning.Constants.TEMPLATE_CLASS_NAME;
-import static com.sdo.dw.rtc.cleaning.Constants.TEMPLATE_FILE;
-import static com.sdo.dw.rtc.cleaning.Constants.TEMPLATE_METHOD_NAME;
+import static com.xie.rtc.cleaning.Constants.CODE;
+import static com.xie.rtc.cleaning.Constants.CODE_FILE;
+import static com.xie.rtc.cleaning.Constants.IMPORT;
+import static com.xie.rtc.cleaning.Constants.TEMPLATE_CLASS_NAME;
+import static com.xie.rtc.cleaning.Constants.TEMPLATE_FILE;
+import static com.xie.rtc.cleaning.Constants.TEMPLATE_METHOD_NAME;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,9 +35,9 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.sdo.dw.rtc.cleaning.exception.InvalidParameterException;
-import com.sdo.dw.rtc.cleaning.filter.Filter;
-import com.sdo.dw.rtc.cleaning.filter.FilterType;
+import com.xie.rtc.cleaning.exception.InvalidParameterException;
+import com.xie.rtc.cleaning.filter.Filter;
+import com.xie.rtc.cleaning.filter.FilterType;
 
 /**
  * @author xiejing.kane

@@ -1,15 +1,15 @@
-package com.sdo.dw.rtc.cleaning.filter.impl;
+package com.xie.rtc.cleaning.filter.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sdo.dw.rtc.cleaning.filter.Filter;
-import com.sdo.dw.rtc.cleaning.filter.FilterType;
-import com.sdo.dw.rtc.cleaning.util.CommonUtils;
-import com.sdo.dw.rtc.cleaning.util.ExtractCallable;
-import com.sdo.dw.rtc.cleaning.util.JSONUtils;
+import com.xie.rtc.cleaning.filter.Filter;
+import com.xie.rtc.cleaning.filter.FilterType;
+import com.xie.rtc.cleaning.util.CommonUtils;
+import com.xie.rtc.cleaning.util.ExtractCallable;
+import com.xie.rtc.cleaning.util.JSONUtils;
 
 import io.thekraken.grok.api.Grok;
 import io.thekraken.grok.api.Match;

@@ -1,9 +1,9 @@
-package com.sdo.dw.rtc.cleaning;
+package com.xie.rtc.cleaning;
 
-import static com.sdo.dw.rtc.cleaning.Constants.DECODER;
-import static com.sdo.dw.rtc.cleaning.Constants.FILTERS;
-import static com.sdo.dw.rtc.cleaning.Constants.FILTER_PARAMS;
-import static com.sdo.dw.rtc.cleaning.Constants.TYPE;
+import static com.xie.rtc.cleaning.Constants.DECODER;
+import static com.xie.rtc.cleaning.Constants.FILTERS;
+import static com.xie.rtc.cleaning.Constants.FILTER_PARAMS;
+import static com.xie.rtc.cleaning.Constants.TYPE;
 
 import java.io.File;
 import java.io.InputStream;
@@ -23,11 +23,11 @@ import org.yaml.snakeyaml.Yaml;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.sdo.dw.rtc.cleaning.decoder.Decoder;
-import com.sdo.dw.rtc.cleaning.exception.InvalidParameterException;
-import com.sdo.dw.rtc.cleaning.filter.Filter;
-import com.sdo.dw.rtc.cleaning.filter.FilterType;
-import com.sdo.dw.rtc.cleaning.util.CommonUtils;
+import com.xie.rtc.cleaning.decoder.Decoder;
+import com.xie.rtc.cleaning.exception.InvalidParameterException;
+import com.xie.rtc.cleaning.filter.Filter;
+import com.xie.rtc.cleaning.filter.FilterType;
+import com.xie.rtc.cleaning.util.CommonUtils;
 
 /**
  * @author xiejing.kane

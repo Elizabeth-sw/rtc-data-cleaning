@@ -1,4 +1,4 @@
-package com.sdo.dw.rtc.cleaning;
+package com.xie.rtc.cleaning;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
-import com.sdo.dw.rtc.cleaning.exception.InvalidParameterException;
+import com.xie.rtc.cleaning.exception.InvalidParameterException;
 
 /**
  * The context is a key-value store used to pass configuration information

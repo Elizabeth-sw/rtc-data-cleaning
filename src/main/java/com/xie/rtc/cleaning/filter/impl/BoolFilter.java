@@ -1,12 +1,12 @@
-package com.sdo.dw.rtc.cleaning.filter.impl;
+package com.xie.rtc.cleaning.filter.impl;
 
 import java.util.Stack;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sdo.dw.rtc.cleaning.filter.Filter;
-import com.sdo.dw.rtc.cleaning.filter.FilterType;
-import com.sdo.dw.rtc.cleaning.util.JSONUtils;
+import com.xie.rtc.cleaning.filter.Filter;
+import com.xie.rtc.cleaning.filter.FilterType;
+import com.xie.rtc.cleaning.util.JSONUtils;
 
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.DoubleValue;

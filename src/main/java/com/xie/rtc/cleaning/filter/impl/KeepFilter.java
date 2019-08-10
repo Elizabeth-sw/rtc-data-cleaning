@@ -1,13 +1,13 @@
-package com.sdo.dw.rtc.cleaning.filter.impl;
+package com.xie.rtc.cleaning.filter.impl;
 
 import java.util.List;
 import java.util.Map.Entry;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Sets;
-import com.sdo.dw.rtc.cleaning.filter.Filter;
-import com.sdo.dw.rtc.cleaning.filter.FilterType;
-import com.sdo.dw.rtc.cleaning.util.JSONUtils;
+import com.xie.rtc.cleaning.filter.Filter;
+import com.xie.rtc.cleaning.filter.FilterType;
+import com.xie.rtc.cleaning.util.JSONUtils;
 
 /**
  * @author xiejing.kane
